@@ -1,14 +1,32 @@
-from openai import OpenAI
-from sk import my_key
-client = OpenAI(api_key = my_key)
+import chromadb
+chroma_client = chromadb.Client()
+collection_name = "test_collection"
+collection = chroma_client.get_or_create_collection(collection_name)
+documents = [
+  {"id":"doc1" , "text": "hello, world!"  },
+  {"id":"doc1" , "text": "how are you today?"  },
+  {"id":"doc1" , "text": "goodbye, see you later!"  }
+]
 
-myembedding = client.embeddings.create(
-  model="text-embedding-ada-002",
-  input="The food was delicious and the waiter...",
-  encoding_format="float"
-)
+for doc in documents :
+  collection.upsert(ids=doc["id"] ,  documents = [doc["text"]])
 
-print(myembedding)
+query = "hello world!"
+
+results =  collection.query(query_text=[query], n_results=3 )
+print(results)
+
+# from openai import OpenAI
+# from sk import my_key
+# client = OpenAI(api_key = my_key)
+
+# myembedding = client.embeddings.create(
+#   model="text-embedding-ada-002",
+#   input="The food was delicious and the waiter...",
+#   encoding_format="float"
+# )
+
+# print(myembedding)
 
 
 # import os
