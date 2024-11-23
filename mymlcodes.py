@@ -1,3 +1,4 @@
+#.................................................................................
 # 1.chat completetion with openai api
 from openai import OpenAI
 from sk import my_key
@@ -19,7 +20,7 @@ chat_completion = client.chat.completions.create(
 for i in range(len(chat_completion.choices)):
     print (chat_completion.choices[i].message.content);
 
-
+#.................................................................................
 # 2. embedding vector generation with openai API
 from openai import OpenAI
 from sk import my_key
@@ -33,7 +34,7 @@ myembedding = client.embeddings.create(
 
 print(myembedding)
 
-
+#.................................................................................
 # 3.chroma db running
 import chromadb
 chroma_client = chromadb.Client()
