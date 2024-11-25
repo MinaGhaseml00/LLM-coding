@@ -110,14 +110,15 @@ def generate_response(question, relevant_chunks):
         ],
     )
 
-#     answer = response.choices[0].message
-#     return answer
+    answer = response.choices[0].message
+    return answer
 
 
 # Example query
 # query_documents("tell me about AI replacing TV writers strike.")
 # Example query and response generation
-question = "tell me about ai replace tv writers strike"
+question = "tell me about ai replace writers"
+question = "tell me about databricks"
 relevant_chunks = query_documents(question)
 answer = generate_response(question, relevant_chunks)
 
