@@ -86,43 +86,29 @@ def query_documents (question , n_results=2):
     return relevant_chunks
 
 
-# def query_documents(question, n_results=2):
-#     # query_embedding = get_openai_embedding(question)
-#     results = collection.query(query_texts=[question], n_results=n_results)
-
-#     # Extract the relevant chunks
-#     relevant_chunks = [doc for sublist in results["documents"] for doc in sublist]
-#     print("==== Returning relevant chunks ====")
-#     return relevant_chunks
-#     # for idx, document in enumerate(results["documents"][0]):
-#     #     doc_id = results["ids"][0][idx]
-#     #     distance = results["distances"][0][idx]
-#     #     print(f"Found document chunk: {document} (ID: {doc_id}, Distance: {distance})")
-
-
 # Function to generate a response from OpenAI
-# def generate_response(question, relevant_chunks):
-#     context = "\n\n".join(relevant_chunks)
-#     prompt = (
-#         "You are an assistant for question-answering tasks. Use the following pieces of "
-#         "retrieved context to answer the question. If you don't know the answer, say that you "
-#         "don't know. Use three sentences maximum and keep the answer concise."
-#         "\n\nContext:\n" + context + "\n\nQuestion:\n" + question
-#     )
+def generate_response(question, relevant_chunks):
+    context = "\n\n".join(relevant_chunks)
+    prompt = (
+        "You are an assistant for question-answering tasks. Use the following pieces of "
+        "retrieved context to answer the question. If you don't know the answer, say that you "
+        "don't know. Use three sentences maximum and keep the answer concise."
+        "\n\nContext:\n" + context + "\n\nQuestion:\n" + question
+    )
 
-#     response = client.chat.completions.create(
-#         model="gpt-3.5-turbo",
-#         messages=[
-#             {
-#                 "role": "system",
-#                 "content": prompt,
-#             },
-#             {
-#                 "role": "user",
-#                 "content": question,
-#             },
-#         ],
-#     )
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": prompt,
+            },
+            {
+                "role": "user",
+                "content": question,
+            },
+        ],
+    )
 
 #     answer = response.choices[0].message
 #     return answer
@@ -131,12 +117,10 @@ def query_documents (question , n_results=2):
 # Example query
 # query_documents("tell me about AI replacing TV writers strike.")
 # Example query and response generation
-question = "tell me about databricks"
+question = "tell me about ai replace tv writers strike"
 relevant_chunks = query_documents(question)
-for i , doc in enumerate(relevant_chunks):
-    print (i , ": " , doc)
-# answer = generate_response(question, relevant_chunks)
+answer = generate_response(question, relevant_chunks)
 
-# print(answer)
+print(answer)
 
     
