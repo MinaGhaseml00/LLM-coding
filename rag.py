@@ -68,22 +68,22 @@ client =  OpenAI(api_key= openai_key)
 def generate_openai_embedding (text):
     response= client.embeddings.create(input="text" ,  model="text-embedding-3-small")
     embedding= response.data[0].embedding
-    print("embedding created")
     return embedding
 
-for doc in chunked_documents:
+for i, doc in enumerate(chunked_documents):
     doc["embedding"] = generate_openai_embedding(doc["text"])
-print(doc["embedding"])
+    print ("embedding:" , i)
 
 for doc in chunked_documents:
     collection.upsert(
         ids=[doc["id"]], documents=[doc["text"]], embeddings=[doc["embedding"]]
-        )
+    )
 
-question = "tell me about databricks"                      
-results = collection.query(query_texts=question, n_results=1)
-print(results)
 
+def query_documents (question , n_results=2):                     
+    results = collection.query(query_texts=question, n_results=n_results)
+    relevant_chunks = [doc for sublist in results["documents"] for doc in sublist]
+    return relevant_chunks
 
 
 # def query_documents(question, n_results=2):
@@ -132,7 +132,9 @@ print(results)
 # query_documents("tell me about AI replacing TV writers strike.")
 # Example query and response generation
 question = "tell me about databricks"
-# relevant_chunks = query_documents(question)
+relevant_chunks = query_documents(question)
+for i , doc in enumerate(relevant_chunks):
+    print (i , ": " , doc)
 # answer = generate_response(question, relevant_chunks)
 
 # print(answer)
