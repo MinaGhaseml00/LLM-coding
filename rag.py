@@ -11,13 +11,6 @@ openai_key = os.getenv ("OPENAI_API_KEY")
 openai_ef = embedding_functions.OpenAIEmbeddingFunction(
     api_key= openai_key ,  model_name = "text-embedding-3-small"
 )
-# load_dotenv()
-
-# openai_key = os.getenv("OPENAI_API_KEY")
-
-# openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-#     api_key=openai_key, model_name="text-embedding-3-small"
-# )
 
 chroma_client= chromadb.PersistentClient(path="chroma_persistent_storage")
 collection_name= "document_qa_collection"
@@ -82,7 +75,7 @@ for doc in chunked_documents:
 
 def query_documents (question , n_results=2):                     
     results = collection.query(query_texts=question, n_results=n_results)
-    relevant_chunks = [doc for sublist in results["documents"] for doc in sublist]
+    relevant_chunks = results["documents"][0]
     return relevant_chunks
 
 
