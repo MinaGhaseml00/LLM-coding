@@ -1,1 +1,0 @@
-my_key = "sk-kcLOpKSJEwg3cRw1BkckyKWxGJxBcIygXlBW6KzzlyT3BlbkFJrQDI9zNOj5g81dxkpitAW3Ct7CTQ7mIHQnUoAMuGIA"
